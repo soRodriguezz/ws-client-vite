@@ -11,7 +11,7 @@ export const connectToServer = () => {
 const addListeners = (socket: Socket) => {
   const serverStatusLabel = document.querySelector("#server-status");
   const clientsUl = document.querySelector("#clients-ul");
-
+  const messagesUl = document.querySelector("#clients-ul");
   const messageForm = document.querySelector<HTMLFormElement>("#message-form");
   const messageInput =
     document.querySelector<HTMLInputElement>("#message-input");
@@ -43,6 +43,13 @@ const addListeners = (socket: Socket) => {
       message: messageInput!.value,
     });
 
-    messageInput!.value = '';
+    messageInput!.value = "";
   });
+
+  socket.on(
+    "message-from-server",
+    (payload: { fullName: string; message: string }) => {
+      console.log(payload);
+    }
+  );
 };
